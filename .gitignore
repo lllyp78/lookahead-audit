@@ -1,0 +1,11 @@
+.DS_Store
+*.bak-*
+OPEN_SOURCE_REVIEW.md
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.coverage
+*.egg-info/
+dist/
+build/
