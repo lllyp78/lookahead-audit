@@ -21,6 +21,34 @@ python3 scripts/truncation_consistency_test.py \
 
 退出码：`0` 所测前缀一致；`1` 发现差异；`2` 输入、运行或覆盖不足，无法判定。差异先排除正常的期末强平、配置/数据版本变化、缓存及随机性；一致也只覆盖实际比较到的路径。脚本对日期按 UTC 解析，跨时区产物要先统一日期含义。
 
+## 决策时点重放
+
+`scripts/decision_time_replay.py` 比较两套决策产物：一套用全量数据，另一套只用 `selection_at` 前可用的数据。按组比较 top-k 集合、top-1 是否改变、共同键的排序相关性。
+
+```bash
+python3 scripts/decision_time_replay.py \
+  --full full_rank.csv --cutoff cutoff_rank.csv \
+  --group-columns trade_date --key-columns trade_date,symbol \
+  --rank-column score --top-k 2 --out replay.json
+```
+
+退出码：`0` 所测组 top-k 完全一致且没有缺失/新增键；`1` 有差异；`2` 输入无效。**一致只说明所测组、所测 top-k 在两种输入下相同，不证明没有泄漏；差异也要先排除 cutoff 实现、数据版本、缺失行和并列处理。** 截断前缀测试按回测终点截断，抓不到每行只向后看一小段（例如较早决策用了较晚窗口量）的泄漏；两种测试互补。
+
+## 成员 / 权重重放
+
+`scripts/membership_time_replay.py` 比较全量与 `selection_at` 截断口径的候选 membership 或 weight：按组报告新增/剔除/调权，以及可选 PnL。
+
+```bash
+python3 scripts/membership_time_replay.py \
+  --full full_membership.csv --cutoff cutoff_membership.csv \
+  --group-columns entry_date --key-columns symbol \
+  --membership-column included --pnl-column pnl --out replay.json
+```
+
+权重模式用 `--weight-column weight --weight-threshold 0`。一端入选、另一端未入选算新增/剔除，不算调权；`membership=0` 与缺失都表示未入选。
+
+退出码：`0` 无差异；`1` 有差异；`2` 输入无效。**一致不证明无泄漏；差异先排除 cutoff 实现、数据版本、缺失行和并列处理。** 可运行例子见 `examples/demo_membership_filter_leak.py`（候选过滤用 T+1 开盘价）。
+
 ## 单节点注入对照
 
 当且仅当能够隔离一个输入边界时，在可恢复的副本里故意让该边界提前读取一个原本尚不可用的版本，再运行相同回测。通用接口：
