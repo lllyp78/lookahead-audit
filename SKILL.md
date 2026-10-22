@@ -44,7 +44,7 @@ description: 审查量化策略与回测中的未来信息、数据版本及训�
 - [反模式参考](references/anti_patterns.md)：做源码溯源时按相关类别查阅。
 - [动态验证指南](references/injection_guide.md)：需要截断、注入或决策时点重放时阅读，含脚本限制和退出码。
 - [决策时点重放](scripts/decision_time_replay.py)：比较全量排序与 `selection_at` 截断排序的 top-k；用于预计算信号/排序文件。
-- [候选/权重重放](scripts/membership_time_replay.py)：比较全量与 `selection_at` 截断的入选集合和权重；用于候选过滤、`weight=0`、调权。
+- [候选/权重重放](scripts/membership_time_replay.py)：比较全量与 `selection_at` 截断的入选集合和权重；用于候选过滤、`weight=0`、调权、退出路径 membership。
 - [报告模板](references/report_template.md)：决策输入来源表、选择/执行分离表、动态验证和限制的固定格式。
 - [中国股票与 ETF 示例](references/markets/cn-equities.md)：审查 A 股交易规则、复权口径或 ETF 时阅读；不要当作其他市场的默认规则。
 - [机器学习策略检查](references/ml-leakage.md)：存在训练、标签、特征选择或调参时阅读。

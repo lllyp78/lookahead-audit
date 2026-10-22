@@ -61,7 +61,7 @@ python3 examples/demo_execution_rank_leak.py --out /tmp/rank-leak --mode clean  
 python3 examples/demo_execution_rank_leak.py --out /tmp/rank-leak --mode leaky   # 返回 1
 ```
 
-## 候选 membership / 权重
+## 候选 / 退出路径 membership 与权重
 
 ```bash
 python3 scripts/membership_time_replay.py \
@@ -70,7 +70,7 @@ python3 scripts/membership_time_replay.py \
   --membership-column included --pnl-column pnl
 ```
 
-比较候选入选集合、权重变化和可选 PnL；权重模式用 `--weight-column weight --weight-threshold 0`。退出码与限制见[动态验证指南](references/injection_guide.md)。
+比较候选/退出路径的入选集合、权重变化和可选 PnL；权重模式用 `--weight-column weight --weight-threshold 0`。退出码与限制见[动态验证指南](references/injection_guide.md)。
 
 可运行的最小例子（候选过滤用 T+1 开盘价）：
 

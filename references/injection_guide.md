@@ -36,7 +36,7 @@ python3 scripts/decision_time_replay.py \
 
 ## 成员 / 权重重放
 
-`scripts/membership_time_replay.py` 比较全量与 `selection_at` 截断口径的候选 membership 或 weight：按组报告新增/剔除/调权，以及可选 PnL。
+`scripts/membership_time_replay.py` 比较全量与 `selection_at` 截断口径的候选/退出路径 membership 或 weight：按组报告新增/剔除/调权，以及可选 PnL。
 
 ```bash
 python3 scripts/membership_time_replay.py \
